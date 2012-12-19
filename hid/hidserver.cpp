@@ -77,9 +77,9 @@ void HIDServer::onControlChannelConnected()
 }
 
 void HIDServer::updateConnectionState() {
-    if (m_interruptSocket != 0 && m_controlSocket != 0)
+    if (m_interruptSocket != 0 && m_controlSocket != 0) {
         setState(HIDServer::CONNECTED);
-    else if (m_interruptChannel.isListening() && m_controlChannel.isListening())
+    } else if (m_interruptChannel.isListening() && m_controlChannel.isListening())
         setState(HIDServer::LISTENING);
     else
         setState(HIDServer::IDLE);
@@ -117,3 +117,71 @@ void HIDServer::setState(HIDServer::State state)
     }
 }
 
+/* Keyboard methods */
+
+int HIDServer::sendKeyDown(int modifiers, int val)
+{
+    char th[10];
+    int n;
+
+    th[0] = 0xa1;
+    th[1] = 0x01;
+    th[2] = modifiers;  // 1 -left control ,2 - left shift, 4 left alt,
+                        // 5- ctrl+ alt (01 + 04) 8 - left gui, 16 - right control,
+                        // 32 - right sift, 64 - right alt, 128 - right gui
+    th[3] = 0x00;
+    th[4] = val;        // the key code
+    th[5] = 0x00;
+    th[6] = 0x00;
+    th[7] = 0x00;
+    th[8] = 0x00;
+    th[9] = 0x00;
+
+    QByteArray data(th, sizeof(th));
+    n = m_interruptSocket->write(data);
+    qDebug() << "KeyDown " << n;
+    return n;
+}
+
+int HIDServer::sendKeyUp()
+{
+    char th[10];
+    int n;
+
+    th[0] = 0xa1;
+    th[1] = 0x01;
+    th[2] = 0x00;
+    th[3] = 0x00;
+    th[4] = 0x00;
+    th[5] = 0x00;
+    th[6] = 0x00;
+    th[7] = 0x00;
+    th[8] = 0x00;
+    th[9] = 0x00;
+
+    QByteArray data(th, sizeof(th));
+    n = m_interruptSocket->write(data);
+    qDebug() << "KeyUP " << n;
+    return n;
+}
+
+void HIDServer::debugKeyDown()
+{
+    qDebug() << "Debug keys now!";
+    int x = 0;
+    int n = 10;
+
+    x = sendKeyDown(0, 4);
+    Q_ASSERT(x == n);
+}
+
+
+void HIDServer::debugKeyUp()
+{
+    qDebug() << "Forcing keyUp!";
+    int x = 0;
+    int n = 10;
+
+    x = sendKeyUp();
+    Q_ASSERT(x == n);
+}

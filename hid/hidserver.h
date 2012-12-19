@@ -21,8 +21,16 @@ public:
     };
 
     explicit HIDServer(QObject *parent = 0);
-    void start();
-    void stop();
+
+    Q_INVOKABLE void start();
+    Q_INVOKABLE void stop();
+
+    int sendKeyDown(int modifiers, int val);
+    int sendKeyUp();
+
+public slots:
+    void debugKeyDown();
+    void debugKeyUp();
 
 private:
     void setState(HIDServer::State state);

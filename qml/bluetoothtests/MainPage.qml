@@ -4,20 +4,55 @@ import com.nokia.meego 1.0
 Page {
     tools: commonTools
 
-    Label {
-        id: label
+    property bool fakeStarted: false
+
+    Item {
+
         anchors.centerIn: parent
-        text: qsTr("Hello world!")
-        visible: false
+        height: childrenRect.height
+        width: childrenRect.width
+
+        Button{
+            id: startButton
+            anchors {
+                top: parent.top
+                horizontalCenter: parent.horizontalCenter
+            }
+            text: (fakeStarted) ? "STOP": "START"
+            onClicked: {
+                if (fakeStarted) {
+                    hidServer.stop();
+                    fakeStarted = false;
+                } else {
+                    hidServer.start();
+                    fakeStarted = true;
+                }
+            }
+        }
+
+        Button{
+            id: sendKeyDown
+            anchors {
+                top: startButton.bottom
+                horizontalCenter: parent.horizontalCenter
+                topMargin: 10
+            }
+            text: "key simulation"
+            onPressedChanged: {
+                if (fakeStarted === false) {
+                    console.log("HIDServer not running!");
+                    return;
+                }
+
+                if (pressed) {
+                    console.log("pressed");
+                    hidServer.debugKeyDown();
+                } else {
+                    console.log("released");
+                    hidServer.debugKeyUp();
+                }
+            }
+        }
     }
 
-    Button{
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: label.bottom
-            topMargin: 10
-        }
-        text: qsTr("Register HID service!")
-        onClicked: label.visible = true
-    }
 }
