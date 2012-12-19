@@ -1,4 +1,4 @@
-#include "hidservice.h"
+#include "hidservicedescriptor.h"
 
 #include <QBluetoothUuid>
 
@@ -9,8 +9,8 @@
  * more details, please see HID spec
  * http://bluetooth.org
  **/
-const int HIDService::HIDDescSize = 119;
-const quint8 HIDService::HIDDesc[HIDService::HIDDescSize] = {
+const int HIDServiceDescriptor::HIDDescSize = 119;
+const uint HIDServiceDescriptor::HIDDesc[HIDServiceDescriptor::HIDDescSize] = {
         // Keyboard descriptor
         0x05, 0x01,
         0x09, 0x06,
@@ -76,13 +76,22 @@ const quint8 HIDService::HIDDesc[HIDService::HIDDescSize] = {
         0xc0
 };
 
-HIDService::HIDService(QObject *parent) :
+HIDServiceDescriptor::HIDServiceDescriptor(QObject *parent) :
     QObject(parent)
 {
-
 }
 
-void HIDService::registerService() {
+void HIDServiceDescriptor::registerService()
+{
+    registerServiceGeneric();
+}
+
+void HIDServiceDescriptor::unregisterService()
+{
+    unregisterServiceGeneric();
+}
+
+void HIDServiceDescriptor::registerServiceGeneric() {
     QBluetoothUuid serviceId(QBluetoothUuid::HumanInterfaceDeviceService);
 
     serviceInfo.setAttribute(QBluetoothServiceInfo::ServiceRecordHandle, (uint)0x0001000e);
@@ -143,25 +152,33 @@ void HIDService::registerService() {
     Q_ASSERT(serviceInfo.isComplete());
     Q_ASSERT(serviceInfo.isValid());
 
+
+    qDebug() << "SERVICE INFO: " << serviceInfo;
     serviceInfo.registerService();
 
     Q_ASSERT(serviceInfo.isRegistered());
 }
 
-void HIDService::addHIDSpecificInfo() {
+void HIDServiceDescriptor::unregisterServiceGeneric() {
+    serviceInfo.unregisterService();
+
+    Q_ASSERT(serviceInfo.isRegistered() == false);
+}
+
+void HIDServiceDescriptor::addHIDSpecificInfo() {
     serviceInfo.setAttribute(0x0202, QVariant::fromValue((quint8) 0xc0));
     serviceInfo.setAttribute(0x0203, QVariant::fromValue((quint8) 0x30));
     serviceInfo.setAttribute(0x0204, QVariant::fromValue(false));
     serviceInfo.setAttribute(0x0205, QVariant::fromValue(true));
 
     // 0x0206 HIDDescriptorList ??
-    QDataStream hidDescriptor;
-    for(int i = 0; i < HIDService::HIDDescSize; ++i) {
-        hidDescriptor << HIDService::HIDDesc[i];
-    }
+    // FIXME: How to do this with Qt Mobility ?? at least for Symbian
+    QByteArray rawHidDescriptor(HIDServiceDescriptor::HIDDesc, HIDServiceDescriptor::HIDDescSize);
+    QString hidDescriptor(rawHidDescriptor);
+
     QBluetoothServiceInfo::Sequence hidDescriptorList;
     hidDescriptorList << QVariant::fromValue((quint8) 0x22)
-                      << QVariant(hidDescriptor);
+                      << hidDescriptor;
     serviceInfo.setAttribute(0x0206, hidDescriptorList);
 
     QBluetoothServiceInfo::Sequence hidLanguageList;

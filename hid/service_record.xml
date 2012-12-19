@@ -1,0 +1,138 @@
+<!--
+
+      service_record.xml
+
+      Copyright 2008 - 2009 	Valerio Valerio <vdv100@gmail.com>
+						
+
+      This program is free software; you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation; either version 2 of the License, or
+      (at your option) any later version.
+
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+
+      You should have received a copy of the GNU General Public License
+      along with this program; if not, write to the Free Software
+      Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+-->
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<record> 
+	<attribute id="0x0000"> 
+		<uint32 value="0x0001000e" /> 
+	</attribute>
+	<attribute id="0x0001">
+		<sequence>
+			<uuid value="0x1124" />
+		</sequence>
+	</attribute>
+	<attribute id="0x0004">
+		<sequence>
+			<sequence>
+				<uuid value="0x0100" />
+				<uint16 value="0x0011" />
+			</sequence>
+			<sequence>
+				<uuid value="0x0011" />
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x0005">
+		<sequence>
+			<uuid value="0x1002" />
+		</sequence>
+	</attribute>
+	<attribute id="0x0006">
+		<sequence>
+			<uint16 value="0x656e" />
+			<uint16 value="0x006a" />
+			<uint16 value="0x0100" />
+		</sequence>
+	</attribute>
+	<attribute id="0x0009">
+		<sequence>
+			<sequence>
+				<uuid value="0x1124" />
+				<uint16 value="0x0100" />
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x000d">
+		<sequence>
+			<sequence>
+				<sequence>
+					<uuid value="0x0100" />
+					<uint16 value="0x0013" />
+				</sequence>
+				<sequence>
+					<uuid value="0x0011" />
+				</sequence>
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x0100">
+		<text encoding="hex" value="426c75655a20484944206d6f7573652026204b6579626f617264" />
+	</attribute>
+	<attribute id="0x0101">
+		<text encoding="hex" value="426c75655a207669727475616c20636f6d626f" />
+	</attribute>
+	<attribute id="0x0102">
+		<text encoding="hex" value="436f7079726967687420323030382d323030392056616c6572696f2056616c6572696f202d2076647631303040676d61696c2e636f6d" />
+	</attribute>
+	<attribute id="0x0200">
+		<uint16 value="0x0100" />
+	</attribute>
+	<attribute id="0x0201">
+		<uint16 value="0x0111" />
+	</attribute>
+	<attribute id="0x0202">
+		<uint8 value="0xc0" />
+	</attribute>
+	<attribute id="0x0203">
+		<uint8 value="0x30" />
+	</attribute>
+	<attribute id="0x0204">
+		<boolean value="false" />
+	</attribute>
+	<attribute id="0x0205">
+		<boolean value="true" />
+	</attribute>
+	<attribute id="0x0206">
+		<sequence>
+			<sequence>
+				<uint8 value="0x22" />
+				<text encoding="hex" value="05010906a1018501050719e029e71500250175019508810295017508810395057501050819012905910295017503910395067508150025650507190029658100c005010902a10185020901a1000509190129031500250175019503810275059501810105010930093109381581257f750895038106c0c0" />
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x0207">
+		<sequence>
+			<sequence>
+				<uint16 value="0x0409" />
+				<uint16 value="0x0100" />
+			</sequence>
+		</sequence>
+	</attribute>
+	<attribute id="0x0208">
+		<boolean value="false" />
+	</attribute>
+	<attribute id="0x0209">
+		<boolean value="true" />
+	</attribute>
+	<attribute id="0x020a">
+		<boolean value="false" />
+	</attribute>
+	<attribute id="0x020b">
+		<uint16 value="0x0100" />
+	</attribute>
+	<attribute id="0x020d">
+		<boolean value="false" />
+	</attribute>
+	<attribute id="0x020e">
+		<boolean value="true" />
+	</attribute>
+</record>

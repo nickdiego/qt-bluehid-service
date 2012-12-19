@@ -1,19 +1,23 @@
-#include <QtGui/QApplication>
-#include "qmlapplicationviewer.h"
+#include <QtCore/QCoreApplication>
+#include <QtCore/QScopedPointer>
+//#include "qmlapplicationviewer.h"
 
-#include "hid/hidservice.h"
+#include "hid/hidserver.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QmlApplicationViewer viewer;
+//    QScopedPointer<QApplication> app(createApplication(argc, argv));
+//    QmlApplicationViewer viewer;
 
-    HIDService hidService;
-    hidService.registerService();
+    QCoreApplication app(argc, argv);
+    HIDServer server;
+    server.start();
 
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qml/bluetoothtests/main.qml"));
-    viewer.showExpanded();
+//    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+//    viewer.setMainQmlFile(QLatin1String("qml/bluetoothtests/main.qml"));
+//    viewer.showExpanded();
 
-    return app->exec();
+    app.exec();
+    server.stop();
+    return 0;
 }
