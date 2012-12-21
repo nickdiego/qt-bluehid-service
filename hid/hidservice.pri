@@ -24,6 +24,16 @@ contains(MEEGO_EDITION,harmattan): {
         $$PWD/hidservicedescriptor.cpp
 }
 
-HEADERS += $$PWD/hidserver.h
-SOURCES += $$PWD/hidserver.cpp
+HEADERS += $$PWD/hidserver.h \
+    hid/hidstringsender.h \
+    hid/hidkeymapper.h
+
+
+SOURCES += $$PWD/hidserver.cpp \
+    hid/hidstringsender.cpp \
+    hid/hidkeymapper.cpp
 INCLUDEPATH += $$PWD
+
+
+
+

@@ -18,18 +18,23 @@ void HIDServer::start()
 {
     QBluetoothAddress any;
 
-    m_serviceDescriptor.unregisterService();
-    m_serviceDescriptor.registerService();
-
     m_interruptChannel.listen(any, INTERRUPT_PORT);
-    Q_ASSERT(m_interruptChannel.isListening());
+    m_controlChannel.listen(any, CONTROL_PORT);
+
+    //Q_ASSERT(m_interruptChannel.isListening());
+    //Q_ASSERT(m_controlChannel.isListening());
+    if (!m_interruptChannel.isListening() || !m_controlChannel.isListening()) {
+        qWarning("Couldn't start HIDServer!");
+        emit error();
+        return;
+    }
+
     qDebug() << "Starting INTERRUPT server - PSM: " << m_interruptChannel.serverPort()
              << " baddr: " << m_interruptChannel.serverAddress().toString();
-
-    m_controlChannel.listen(any, CONTROL_PORT);
-    Q_ASSERT(m_controlChannel.isListening());
     qDebug() << "Starting CONTROL server - PSM: " << m_controlChannel.serverPort()
              << " baddr: " << m_controlChannel.serverAddress().toString();
+
+    m_serviceDescriptor.registerService();
 
     connect(&m_interruptChannel, SIGNAL(newConnection()), this, SLOT(onInterruptChannelConnected()));
     connect(&m_controlChannel, SIGNAL(newConnection()), this, SLOT(onControlChannelConnected()));
@@ -139,7 +144,7 @@ int HIDServer::sendKeyDown(int modifiers, int val)
 
     QByteArray data(th, sizeof(th));
     n = m_interruptSocket->write(data);
-    qDebug() << "KeyDown " << n;
+//    qDebug() << "KeyDown " << n;
     return n;
 }
 
@@ -161,13 +166,14 @@ int HIDServer::sendKeyUp()
 
     QByteArray data(th, sizeof(th));
     n = m_interruptSocket->write(data);
-    qDebug() << "KeyUP " << n;
+//    qDebug() << "KeyUP " << n;
     return n;
 }
 
+// debug methods
 void HIDServer::debugKeyDown()
 {
-    qDebug() << "Debug keys now!";
+    qDebug() << QDateTime::currentDateTime() <<  " Debug keyDown";
     int x = 0;
     int n = 10;
 
@@ -178,7 +184,7 @@ void HIDServer::debugKeyDown()
 
 void HIDServer::debugKeyUp()
 {
-    qDebug() << "Forcing keyUp!";
+    qDebug() << QDateTime::currentDateTime() <<  "Forcing keyUp";
     int x = 0;
     int n = 10;
 

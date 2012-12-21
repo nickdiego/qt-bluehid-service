@@ -2,6 +2,7 @@
 #define HIDSERVER_H
 
 #include <QL2capServer>
+#include <QtDeclarative>
 
 #include "hidservicedescriptor.h"
 
@@ -13,6 +14,9 @@ static const quint16 INTERRUPT_PORT = 0x0013;
 class HIDServer : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(State)
+    Q_PROPERTY(State state READ state NOTIFY stateChanged FINAL)
+
 public:
     enum State {
         IDLE,
@@ -26,25 +30,29 @@ public:
     Q_INVOKABLE void stop();
 
     int sendKeyDown(int modifiers, int val);
+    int sendKeyDownUp(int modifiers, int val);
     int sendKeyUp();
+
+    HIDServer::State state() { return m_state; }
 
 public slots:
     void debugKeyDown();
     void debugKeyUp();
 
-private:
-    void setState(HIDServer::State state);
-    void configureChannels();
-    void updateConnectionState();
-    void releaseSocket(QBluetoothSocket* &socket);
+signals:
+    void stateChanged();
+    void error();
 
 private slots:
     void onInterruptChannelConnected();
     void onControlChannelConnected();
     void onSocketDisconnected();
 
-signals:
-    void stateChanged();
+private:
+    void setState(HIDServer::State state);
+    void configureChannels();
+    void updateConnectionState();
+    void releaseSocket(QBluetoothSocket* &socket);
 
 private:
     HIDServer::State m_state;
@@ -53,5 +61,7 @@ private:
     QL2capServer m_interruptChannel, m_controlChannel;
     QBluetoothSocket *m_interruptSocket, *m_controlSocket;
 };
+
+QML_DECLARE_TYPE(HIDServer)
 
 #endif // HIDSERVER_H
