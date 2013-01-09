@@ -39,7 +39,7 @@ void HIDStringSender::sendNextKeyDown()
     }
 
     QPair<int, int> code = m_keyMapper.getCode(m_str.at(m_currentIndex));
-    qDebug() << "down " << code.second;
+    //qDebug() << "down " << code.second;
     m_hidServer.sendKeyDown(code.first, code.second);
     m_currentIndex += 1;
 
@@ -48,7 +48,7 @@ void HIDStringSender::sendNextKeyDown()
 
 void HIDStringSender::sendkeyUp()
 {
-    qDebug() << "up";
+    //qDebug() << "up";
     m_hidServer.sendKeyUp();
     QTimer::singleShot(KEY_SEND_INTERVAL, this, SLOT(sendNextKeyDown()));
 }

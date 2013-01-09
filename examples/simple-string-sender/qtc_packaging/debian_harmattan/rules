@@ -23,16 +23,16 @@ configure-stamp:
 
 build: build-stamp
 
-build-stamp: configure-stamp  
+build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
 	# $(MAKE) # Uncomment this line for use without Qt Creator
-	#docbook-to-man debian/qt-bluehid-service.sgml > qt-bluehid-service.1
+	#docbook-to-man debian/simplestringsender.sgml > simplestringsender.1
 
 	touch $@
 
-clean: 
+clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
@@ -40,16 +40,16 @@ clean:
 	# Add here commands to clean up after the build process.
 	$(MAKE) clean
 
-	dh_clean 
+	dh_clean
 
 install: build
 	dh_testdir
 	dh_testroot
-	dh_clean -k 
+	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/qt-bluehid-service.
-	$(MAKE) INSTALL_ROOT="$(CURDIR)"/debian/qt-bluehid-service install
+	# Add here commands to install the package into debian/simplestringsender.
+	$(MAKE) INSTALL_ROOT="$(CURDIR)"/debian/simplestringsender install
 
 
 # Build architecture-independent files here.
@@ -60,12 +60,12 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs 
+	dh_installchangelogs
 	dh_installdocs
 	dh_installexamples
 #	dh_install
 #	dh_installmenu
-#	dh_installdebconf	
+#	dh_installdebconf
 #	dh_installlogrotate
 #	dh_installemacsen
 #	dh_installpam

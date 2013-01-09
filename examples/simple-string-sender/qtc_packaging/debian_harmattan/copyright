@@ -1,5 +1,5 @@
 This package was debianized by Nick Diego <nick@unknown> on
-Tue, 08 Jan 2013 21:35:42 -0400.
+Sat, 15 Dec 2012 16:22:13 -0400.
 
 It was downloaded from <url://example.com>
 
@@ -32,7 +32,7 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2013, Nick Diego <nick@unknown> and
+The Debian packaging is (C) 2012, Nick Diego <nick@unknown> and
 is licensed under the GPL, see above.
 
 

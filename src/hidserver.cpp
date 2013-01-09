@@ -44,6 +44,9 @@ void HIDServer::start()
 
 void HIDServer::stop()
 {
+    if (m_state == HIDServer::IDLE)
+        return;
+
     qDebug() << "stoping server...";
     disconnect(&m_interruptChannel, SIGNAL(newConnection()), this, SLOT(onInterruptChannelConnected()));
     disconnect(&m_controlChannel, SIGNAL(newConnection()), this, SLOT(onControlChannelConnected()));

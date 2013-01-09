@@ -3,8 +3,8 @@
 
 #include "qmlapplicationviewer.h"
 
-#include "hid/hidserver.h"
-#include "hid/hidstringsender.h"
+#include "hidserver.h"
+#include "hidstringsender.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     viewer.rootContext()->setContextProperty("hidStringSender", &stringSender);
 
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qml/bluetoothtests/main.qml"));
+    viewer.setMainQmlFile(QLatin1String("qml/simplestringsender/main.qml"));
     viewer.showExpanded();
 
     app->exec();
