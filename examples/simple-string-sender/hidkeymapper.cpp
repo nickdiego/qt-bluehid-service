@@ -1,8 +1,11 @@
 #include "hidkeymapper.h"
 
+#include <QDebug>
+
 HIDAlphaNumKeyMapper::HIDAlphaNumKeyMapper(QObject *parent):
     QObject(parent)
 {
+    qDebug() << "Construct KeyMapper";
     initMap();
 }
 

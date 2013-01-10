@@ -1,0 +1,12 @@
+<aegis>
+    <request>
+        <credential name="GRP::pulse-access" />
+        <credential name="GRP::video" />
+
+        <credential name="CAP::net_bind_service" />
+        <credential name="CAP::net_admin" />
+        <credential name="CAP::net_raw" />
+        <credential name="CAP::ipc_lock" />
+        <for path="/opt/simplestringsender/bin/simplestringsender" />
+    </request>
+</aegis>

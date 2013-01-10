@@ -3,14 +3,15 @@
 
 #include <QObject>
 
-#include "hidserver.h"
 #include "hidkeymapper.h"
+
+class HIDServer;
 
 class HIDStringSender : public QObject
 {
     Q_OBJECT
 public:
-    explicit HIDStringSender(HIDServer &hidServer, QObject *parent = 0);
+    explicit HIDStringSender(HIDServer *hidServer, QObject *parent = 0);
 
 signals:
     void sent();
@@ -21,7 +22,7 @@ public slots:
     void sendkeyUp();
 
 private:
-    HIDServer &m_hidServer;
+    HIDServer *m_hidServer;
     HIDAlphaNumKeyMapper m_keyMapper;
     QString m_str;
     int m_currentIndex;

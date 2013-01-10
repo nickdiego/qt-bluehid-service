@@ -9,23 +9,29 @@
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
-    QmlApplicationViewer viewer;
+    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
     qmlRegisterUncreatableType<HIDServer>("bluetests", 1, 0, "HIDServer",
                                           "Only used for reading HIDServer properties");
 
-    HIDServer server;
-    HIDStringSender stringSender(server);
-    server.start();
+    // FIXME: If server is declared as a object,
+    //        app crashes at several points!
+    QScopedPointer<HIDServer> server(new HIDServer());
+    QScopedPointer<HIDStringSender> stringSender(new HIDStringSender(server.data()));
+    server->start();
 
-    viewer.rootContext()->setContextProperty("hidServer", &server);
-    viewer.rootContext()->setContextProperty("hidStringSender", &stringSender);
+    viewer->rootContext()->setContextProperty(QLatin1String("hidServer"), server.data());
+    viewer->rootContext()->setContextProperty(QLatin1String("hidStringSender"), stringSender.data());
 
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
-    viewer.setMainQmlFile(QLatin1String("qml/simplestringsender/main.qml"));
-    viewer.showExpanded();
+    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer->setMainQmlFile(QLatin1String("qml/simplestringsender/main.qml"));
+    viewer->showExpanded();
 
     app->exec();
-    server.stop();
+
+    qDebug() << "Mainloop finished";
+    // FIXME: App is aborting when destructing hidServer.
+    //server->stop();
+
     return 0;
 }

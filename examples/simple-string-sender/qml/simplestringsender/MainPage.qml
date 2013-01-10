@@ -97,12 +97,12 @@ Page {
                 console.log("Sequential");
                 hidStringSender.send(textToSend.text);
             }
-            Connections {
-                target: hidStringSender
-                onSent: {
-                    statusLabel.text = "Sent \"" + textToSend.text + "\"";
-                }
-            }
+//            Connections {
+//                target: hidStringSender
+//                onSent: {
+//                    statusLabel.text = "Sent \"" + textToSend.text + "\"";
+//                }
+//            }
         }
     }
 

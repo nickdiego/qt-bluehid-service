@@ -12,6 +12,7 @@ HIDServer::HIDServer(QObject *parent) :
     m_controlSocket(0)
 {
     configureChannels();
+    qDebug() << "Construct HidServer";
 }
 
 void HIDServer::start()

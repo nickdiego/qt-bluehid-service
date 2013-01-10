@@ -8,8 +8,8 @@
 
 QTM_USE_NAMESPACE
 
-static const quint16 CONTROL_PORT   = 0x0011;
-static const quint16 INTERRUPT_PORT = 0x0013;
+#define CONTROL_PORT   0x0011
+#define INTERRUPT_PORT 0x0013
 
 class HIDServer : public QObject
 {

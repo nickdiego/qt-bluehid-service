@@ -9,6 +9,7 @@ HIDServiceDescriptor::HIDServiceDescriptor(QObject *parent) :
     QObject(parent), service(0),
     serviceRecord(0), registered(false)
 {
+    qDebug() << "Construct ServiceDescriptor";
 }
 
 void HIDServiceDescriptor::registerService()
